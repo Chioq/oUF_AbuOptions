@@ -107,7 +107,7 @@ function ns.Widgets.TabPanel(parent, text, icon)
 	end
 
 	-- Panel Area
-	local panelArea = CreateFrame('Frame', parent:GetName() .. '_PanelArea', parent, 'OmniCC_TabPanelTemplate')
+	local panelArea = CreateFrame('Frame', parent:GetName() .. '_PanelArea', parent, 'oUF_Abu_TabPanelTemplate')
 	panelArea:SetPoint('TOPLEFT', 4, -56)
 	panelArea:SetPoint('BOTTOMRIGHT', -4, 4)
 	panelArea.Add = function(self, panel)
