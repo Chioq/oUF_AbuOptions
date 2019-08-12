@@ -241,15 +241,14 @@ local function classAuraBar(parent)
 	end
 
 	f.Update = function(self)
-		local index = GetSpecialization()
 		if not index or not self:GetParent():IsVisible() then
 			return self:Hide()
 		end
 		self:Show()
-		local id, name, description, icon, background, role = GetSpecializationInfo(index)
+		
 		self.icon:SetTexture(icon)
-		self.text:SetText(string.format(L["General_classAuraBar"], name))
-		self.specId = id
+		self.text:SetText(string.format(L["General_classAuraBar"], ""))
+		self.specId = 1
 
 		local _, class = UnitClass('player')
 		local color = (CUSTOM_CLASS_COLORS or RAID_CLASS_COLORS)[class]
@@ -277,7 +276,6 @@ local function classAuraBar(parent)
 	end
 
 	f:SetScript('OnEvent', f.Update)
-	f:RegisterEvent('PLAYER_TALENT_UPDATE')
 
 	table.insert(parent.widgets, f)
 	return f
@@ -353,8 +351,6 @@ function general:Create(  )
 	--absorbBar:SetPoint('TOPRIGHT', -220, -138)
 	local classPortraits = createCheckButton(self, "General_ClassP", 'classPortraits')
 	classPortraits:SetPoint('TOPRIGHT', -220, -138)
-	local comboPoints = createCheckButton(self, "General_showComboPoints", 'showComboPoints', function() oUFAbu:UpdateBaseFrames('player') end)
-	comboPoints:SetPoint('TOPLEFT', self.widgets[#self.widgets-1], 'BOTTOMLEFT', 0, -CB_GAP)
 
 	local powerPredictionBar = createCheckButton(self, "General_powerPredictionBar", 'powerPredictionBar')
 	powerPredictionBar:SetPoint('TOPLEFT', self.widgets[#self.widgets-1], 'BOTTOMLEFT', 0, -CB_GAP)
