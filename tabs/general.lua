@@ -240,42 +240,42 @@ local function classAuraBar(parent)
 		end
 	end
 
-	f.Update = function(self)
-		if not index or not self:GetParent():IsVisible() then
-			return self:Hide()
-		end
-		self:Show()
+	-- f.Update = function(self)
+	-- 	if not self:GetParent():IsVisible() then
+	-- 		return self:Hide()
+	-- 	end
+	-- 	self:Show()
 		
-		self.icon:SetTexture(icon)
-		self.text:SetText(string.format(L["General_classAuraBar"], ""))
-		self.specId = 1
+	-- 	self.icon:SetTexture(icon)
+	-- 	self.text:SetText(string.format(L["General_classAuraBar"], ""))
+	-- 	self.specId = 1
 
-		local _, class = UnitClass('player')
-		local color = (CUSTOM_CLASS_COLORS or RAID_CLASS_COLORS)[class]
-		self.text:SetTextColor(color.r, color.g, color.b)
+	-- 	local _, class = UnitClass('player')
+	-- 	local color = (CUSTOM_CLASS_COLORS or RAID_CLASS_COLORS)[class]
+	-- 	self.text:SetTextColor(color.r, color.g, color.b)
 
-		if not ns.settings.classBar[self.specId] or type(ns.settings.classBar[self.specId]) ~= 'table' then
-			ns.settings.classBar[self.specId] = {spellID = 0, r = 0, g = 0, b = 0}
-		end
+	-- 	if not ns.settings.classBar[self.specId] or type(ns.settings.classBar[self.specId]) ~= 'table' then
+	-- 		ns.settings.classBar[self.specId] = {spellID = 0, r = 0, g = 0, b = 0}
+	-- 	end
 
-		self.colorpicker:Update()
-		self.box:GetScript("OnEscapePressed")(self.box)
+	-- 	self.colorpicker:Update()
+	-- 	self.box:GetScript("OnEscapePressed")(self.box)
 
 
-		local spell = ns.settings.classBar[self.specId].spellID
-		if spell == 0 then
-			self.spelltext:SetText(ADDON_DISABLED)
-		else
-			local name, _, icon = GetSpellInfo(spell)
-			if name and icon then
-				self.spelltext:SetFormattedText("|T%s:0|t %s", icon, name)
-			else
-				self.spelltext:SetText("Invalid Spell") -- shouldnt happen
-			end
-		end
-	end
+	-- 	local spell = ns.settings.classBar[self.specId].spellID
+	-- 	if spell == 0 then
+	-- 		self.spelltext:SetText(ADDON_DISABLED)
+	-- 	else
+	-- 		local name, _, icon = GetSpellInfo(spell)
+	-- 		if name and icon then
+	-- 			self.spelltext:SetFormattedText("|T%s:0|t %s", icon, name)
+	-- 		else
+	-- 			self.spelltext:SetText("Invalid Spell") -- shouldnt happen
+	-- 		end
+	-- 	end
+	-- end
 
-	f:SetScript('OnEvent', f.Update)
+	-- f:SetScript('OnEvent', f.Update)
 
 	table.insert(parent.widgets, f)
 	return f
@@ -307,24 +307,18 @@ function general:Create(  )
 	showparty:SetPoint('TOPLEFT', SIDE_GAP, -38)
 	local partyinraid = createCheckButton(self, "General_PartyInRaid", 'showPartyInRaid', true)
 	partyinraid:SetPoint('TOPLEFT', showparty, 'BOTTOMLEFT', INDENT, -CB_GAP)
-	local showArena = createCheckButton(self, "General_Arena", 'showArena', true)
-	showArena:SetPoint('TOPLEFT', partyinraid, 'BOTTOMLEFT', -INDENT, -CB_GAP)
 	local showBoss = createCheckButton(self, "General_Boss", 'showBoss', true)
-	showBoss:SetPoint('TOPLEFT', showArena, 'BOTTOMLEFT', 0, -CB_GAP)
-
+	showBoss:SetPoint('TOPLEFT', partyinraid, 'BOTTOMLEFT', -INDENT, -CB_GAP)
 	local enablecb = createCheckButton(self, "General_Castbars", 'castbars', true)
 	enablecb:SetPoint('TOPLEFT', showBoss, 'BOTTOMLEFT', 0, -(CB_GAP*3))
 	local showTicks = createCheckButton(self, "General_Ticks", 'castbarticks')
 	showTicks:SetPoint('TOPLEFT', enablecb, 'BOTTOMLEFT', INDENT, -CB_GAP)
-
 	local portraitT = createCheckButton(self, "General_PTimer", 'portraitTimer', true)
 	portraitT:SetPoint('TOPLEFT', showTicks, 'BOTTOMLEFT', -INDENT, (-CB_GAP)*3)
 	local combattext = createCheckButton(self, "General_Feedback", 'combatText', true)
 	combattext:SetPoint('TOPLEFT', portraitT, 'BOTTOMLEFT', 0, -CB_GAP)
-	local ThreatIndicator = createCheckButton(self, "General_Threat", 'ThreatIndicator', true)
-	ThreatIndicator:SetPoint('TOPLEFT', combattext, 'BOTTOMLEFT', 0, -CB_GAP)
 	local colorDebuff = createCheckButton(self, "General_OnlyPlayer", 'colorPlayerDebuffsOnly')
-	colorDebuff:SetPoint('TOPLEFT', ThreatIndicator, 'BOTTOMLEFT', 0, -CB_GAP)
+	colorDebuff:SetPoint('TOPLEFT', combattext, 'BOTTOMLEFT', 0, -CB_GAP)
 	local useAuraTimer = createCheckButton(self, "General_AuraTimer", 'useAuraTimer', true)
 	useAuraTimer:SetPoint('TOPLEFT', colorDebuff, 'BOTTOMLEFT', 0, -CB_GAP)
 	local clickThrough = createCheckButton(self, "General_Click", 'clickThrough', oUFAbu.UpdateBaseFrames)
@@ -347,40 +341,40 @@ function general:Create(  )
 	})
 	focBut:SetPoint("TOPLEFT", focMod, "BOTTOMLEFT", 0, -20)
 
-	--local absorbBar = createCheckButton(self, "General_Absorb", 'absorbBar', true)
-	--absorbBar:SetPoint('TOPRIGHT', -220, -138)
+	-- local absorbBar = createCheckButton(self, "General_Absorb", 'absorbBar', true)
+	-- absorbBar:SetPoint('TOPRIGHT', -220, -138)
 	local classPortraits = createCheckButton(self, "General_ClassP", 'classPortraits')
 	classPortraits:SetPoint('TOPRIGHT', -220, -138)
 
-	local powerPredictionBar = createCheckButton(self, "General_powerPredictionBar", 'powerPredictionBar')
-	powerPredictionBar:SetPoint('TOPLEFT', self.widgets[#self.widgets-1], 'BOTTOMLEFT', 0, -CB_GAP)
-	local builderSpender = createCheckButton(self, "General_builderSpender", 'builderSpender')
-	builderSpender:SetPoint('TOPLEFT', self.widgets[#self.widgets-1], 'BOTTOMLEFT', 0, -CB_GAP)
+	-- local powerPredictionBar = createCheckButton(self, "General_powerPredictionBar", 'powerPredictionBar')
+	-- powerPredictionBar:SetPoint('TOPLEFT', self.widgets[#self.widgets-1], 'BOTTOMLEFT', 0, -CB_GAP)
+	-- local builderSpender = createCheckButton(self, "General_builderSpender", 'builderSpender')
+	-- builderSpender:SetPoint('TOPLEFT', self.widgets[#self.widgets-1], 'BOTTOMLEFT', 0, -CB_GAP)
 
-	local asd = classAuraBar(self)
-	asd:SetPoint('TOPLEFT', self.widgets[#self.widgets-1], 'BOTTOMLEFT', 0, -CB_GAP)
+	-- local asd = classAuraBar(self)
+	-- asd:SetPoint('TOPLEFT', self.widgets[#self.widgets-1], 'BOTTOMLEFT', 0, -CB_GAP)
 
-	for k, v in pairs(GET(class)) do
-		local button = ns.Widgets.CheckButton(self, L['General_'..k])
-		button.db = class
-		button.db2 = k
-		button.reload = true
-		button.tooltip = L['General_'..k..'Tip']
+	-- for k, v in pairs(GET(class)) do
+	-- 	local button = ns.Widgets.CheckButton(self, L['General_'..k])
+	-- 	button.db = class
+	-- 	button.db2 = k
+	-- 	button.reload = true
+	-- 	button.tooltip = L['General_'..k..'Tip']
 
-		button.OnEnableSetting = function(self, enable)
-			SET(self.db, enable, self.reload, self.db2)
-		end
+	-- 	button.OnEnableSetting = function(self, enable)
+	-- 		SET(self.db, enable, self.reload, self.db2)
+	-- 	end
 
-		button.IsSettingEnabled = function(self)
-			return GET(self.db, self.db2)
-		end
+	-- 	button.IsSettingEnabled = function(self)
+	-- 		return GET(self.db, self.db2)
+	-- 	end
 
-		table.insert(self.widgets, button)
-		local i = #self.widgets
+	-- 	table.insert(self.widgets, button)
+	-- 	local i = #self.widgets
 
-		self.widgets[i]:SetPoint('TOPLEFT', self.widgets[i-1], 'BOTTOMLEFT', 0, -CB_GAP)
-		self.widgets[i].Text:SetTextColor(color.r, color.g, color.b)
-	end
+	-- 	self.widgets[i]:SetPoint('TOPLEFT', self.widgets[i-1], 'BOTTOMLEFT', 0, -CB_GAP)
+	-- 	self.widgets[i].Text:SetTextColor(color.r, color.g, color.b)
+	-- end
 end
 
 function general:Update()
