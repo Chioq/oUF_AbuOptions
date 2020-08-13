@@ -98,7 +98,7 @@
 		<Frames/>
 		<Scripts>
 			<OnLoad>
-				self:SetBackdropBorderColor(0.6, 0.6, 0.6, 1);
+				self.backdropBorderColor = CreateColor(0.6, 0.6, 0.6, 1);
 				_G[self:GetName() .. "Bottom"]:SetVertexColor(0.66, 0.66, 0.66);
 			</OnLoad>
 		</Scripts>

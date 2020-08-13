@@ -219,9 +219,8 @@ function ns.Widgets.AuraEditor(parent, title, desc)
 		self.offset = math.floor(offset / ROW_HEIGHT + 0.5)
 		f:UpdateScroll()
 	end)
-	scrollFrame:SetBackdrop(backdrop)
-	scrollFrame:SetBackdropBorderColor(0.4, 0.4, 0.4)
-	scrollFrame:SetBackdropColor(0, 0, 0, 0.3)
+	scrollFrame.backdropBorderColor = CreateColor(0.4, 0.4, 0.4)
+	scrollFrame.backdropColor = CreateColor(0, 0, 0, 0.3)
 	f.scrollFrame = scrollFrame
 
 	-- Fix the bar position
